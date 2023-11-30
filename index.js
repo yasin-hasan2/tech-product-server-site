@@ -34,6 +34,7 @@ async function run() {
 
         const productsCollection = client.db("buntydb").collection("products");
         const usersCollection = client.db('buntydb').collection('users')
+        const reviewCollection = client.db("buntydb").collection("review");
 
 
 
@@ -72,6 +73,21 @@ async function run() {
             console.log("this is users", users)
             res.send(users)
         })
+
+        app.post('/review', async (req, res) => {
+            const review = req.body
+            const result = await reviewCollection.insertOne(review)
+            console.log(result)
+            res.send(result)
+        })
+
+        app.get('/review', async (req, res) => {
+            const review = await reviewCollection.find().toArray()
+            console.log("your comment", review)
+            res.send(review)
+
+        })
+
 
 
 
